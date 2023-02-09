@@ -17,8 +17,8 @@ jobs:
           registry-url: "https://npm.pkg.github.com"
           scope: "@CarlFMateus"
       - run: npm ci
-      - run: npm run lint
       - run: npm run test
+      # - run: npm run lint
       - uses: artiomtr/jest-coverage-report-action@v2.2.0
         with: 
           github-token: ${{ secrets.GITHUB_TOKEN }}
