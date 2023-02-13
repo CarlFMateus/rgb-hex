@@ -11,26 +11,26 @@ jobs:
   coverage:
     runs-on: ubuntu-latest
 
-    # strategy:
-      # matrix:
-        #node-version: [16.x]
+    strategy:
+      matrix:
+        node-version: [16.x]
 
     steps:
       - uses: actions/checkout@v3
-      # - name: Use Node.js ${{ matrix.node-version }}
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: ${{matrix.node-version}}
-      # - name: npm install
-      #   run: npm ci
-      # - name: tests
-      #   run: npm run test
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{matrix.node-version}}
+      - name: npm install
+        run: npm ci
+      - name: tests
+        run: npm run test
       # - run: npm run lint
       - uses: ArtiomTr/jest-coverage-report-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           # output: report-markdown
           # threshold: 80 # optional parameter auto-reject if below.
-      # - run: npm run build
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: npm run build
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
