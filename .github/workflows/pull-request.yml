@@ -1,10 +1,10 @@
 name: Coverage Report
 
-permissions: 
- id-token: write
- contents: read
- issues: write
- pull-requests: write
+# permissions: 
+#  id-token: write
+#  contents: read
+#  issues: write
+#  pull-requests: write
 
 on:
   pull_request:
@@ -16,6 +16,7 @@ on:
 
 jobs:
   coverage:
+    permissions: write-all
     runs-on: ubuntu-latest
 
     strategy:
@@ -34,8 +35,8 @@ jobs:
         run: npm run test
       # - run: npm run lint
       - uses: ArtiomTr/jest-coverage-report-action@v2
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+        # with:
+          # github-token: ${{ secrets.GITHUB_TOKEN }}
           # output: report-markdown
           # threshold: 80 # optional parameter auto-reject if below.
       # - run: npm run build
