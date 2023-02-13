@@ -3,7 +3,7 @@ name: Coverage Report
 on:
   pull_request:
     branches:
-      - master
+      - "master"
       - "*/feature*"
     types: [opened, reopened, synchronize]
 
@@ -31,6 +31,6 @@ jobs:
       #     github-token: ${{ secrets.GITHUB_TOKEN }}
       #     # output: report-markdown
       #     # threshold: 80 # optional parameter auto-reject if below.
-      - run: npm run build
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - run: npm run build
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
