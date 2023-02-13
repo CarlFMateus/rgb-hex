@@ -10,7 +10,7 @@ on:
 
 jobs:
   coverage:
-    permissions: write-all
+    # permissions: write-all
     runs-on: ubuntu-latest
 
     strategy:
@@ -30,6 +30,4 @@ jobs:
       # - run: npm run lint
       - name: Coverage Report
         uses: ArtiomTr/jest-coverage-report-action@v2
-        with:
-          output: report-markdown
         
