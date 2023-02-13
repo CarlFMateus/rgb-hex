@@ -1,7 +1,14 @@
 name: Coverage Report
 
+permissions: 
+ id-token: write
+ contents: read
+ issues: write
+ pull-requests: write
+
 on:
   pull_request:
+
     branches:
       - "master"
       - "*/feature*"
@@ -26,7 +33,7 @@ jobs:
       - name: tests
         run: npm run test
       # - run: npm run lint
-      - uses: artiomtr/jest-coverage-report-action@v2.0-rc.5
+      - uses: ArtiomTr/jest-coverage-report-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           # output: report-markdown
