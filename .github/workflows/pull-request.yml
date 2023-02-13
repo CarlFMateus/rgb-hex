@@ -35,6 +35,7 @@ jobs:
         run: npm run test
       # - run: npm run lint
       - uses: ArtiomTr/jest-coverage-report-action@v2
+      # Esto es una prueba
         # with:
           # github-token: ${{ secrets.GITHUB_TOKEN }}
           # output: report-markdown
