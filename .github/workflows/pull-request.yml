@@ -4,11 +4,6 @@ on:
   pull_request_target:
     branches:
       - master
-
-  pull_request:
-    branches:
-      - master
-      - "*/feature*"
     types: [opened, reopened, synchronize]
 
 jobs:
