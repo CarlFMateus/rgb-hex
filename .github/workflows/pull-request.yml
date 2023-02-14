@@ -13,8 +13,8 @@ jobs:
     # permissions: write-all
     permissions: 
       # actions: write
-      # checks: write
-      pull-requests: write
+      checks: write
+      # pull-requests: write
     runs-on: ubuntu-latest
 
     strategy:
