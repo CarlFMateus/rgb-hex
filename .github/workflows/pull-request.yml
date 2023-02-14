@@ -12,7 +12,7 @@ jobs:
   coverage:
     # permissions: write-all
     permissions: 
-      actions: write
+      # actions: write
       checks: write
       pull-requests: write
     runs-on: ubuntu-latest
