@@ -1,20 +1,19 @@
-name: Coverage Report
+name: Unit Tests
 
 on:
   pull_request:
-
     branches:
       - "master"
       - "*/feature*"
     types: [opened, reopened, synchronize]
 
 jobs:
-  coverage:
+  tests:
     # permissions: write-all
     permissions: 
-      # actions: write
       checks: write
       pull-requests: write
+      contents: write
     runs-on: ubuntu-latest
 
     strategy:
