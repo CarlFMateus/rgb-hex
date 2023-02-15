@@ -7,7 +7,7 @@
     "prebuild": "rimraf dist",
     "build": "tsc",
     "test": "jest",
-    "test-changed": "jest -o",
+    "test-changed": "jest --onlyChanged",
     "test:nyan": "jest --reporters=\"jest-nyancat-reporter\"",
     "test:watch": "npm run test -- --watchAll"
   },
