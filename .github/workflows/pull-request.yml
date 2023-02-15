@@ -4,11 +4,12 @@ on:
   pull_request:
     branches:
       - "master"
-      - "*/feature*"
     types: [opened, reopened, synchronize]
 
 jobs:
   tests:
+    # permissions: write-all
+    if: startsWith(github.head_ref, 'feature')
     permissions: 
       checks: write
       pull-requests: write
