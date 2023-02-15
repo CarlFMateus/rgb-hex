@@ -57,8 +57,6 @@ jobs:
 
             
             console.log('context', context)
-            # console.log('issues', github.issues)
-            # console.log('pulls', github.pulls)
       - name: Coverage Report
         uses: ArtiomTr/jest-coverage-report-action@v2
         with: 
