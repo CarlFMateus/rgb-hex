@@ -1,6 +1,6 @@
 name: Unit Tests
 #  Prueba
-run-name: ${{ github.actor }} is learning Github Actions 😎
+run-name: ${{ github.actor }} is execute test coverage 😎
 on:
   pull_request:
     branches:
