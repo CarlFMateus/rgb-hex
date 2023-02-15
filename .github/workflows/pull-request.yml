@@ -7,6 +7,7 @@ on:
       - "master"
     types: [opened, reopened, synchronize]
 
+# Esto es una prueba branch enhancement
 # permissions: write-all
 permissions:
   checks: write
