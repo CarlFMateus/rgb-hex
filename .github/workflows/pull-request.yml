@@ -1,29 +1,35 @@
-name: Pull Request
-
-on: 
+name: Unit Tests
+#  Prueba
+on:
   pull_request:
-    branches: 
-      - master
+    branches:
+      - "master"
+      - "*/feature*"
     types: [opened, reopened, synchronize]
 
 jobs:
-  pull_request:
+  tests:
+    permissions: 
+      checks: write
+      pull-requests: write
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with: 
-          node-version: "16.x"
-          registry-url: "https://npm.pkg.github.com"
-          scope: "@CarlFMateus"
-      - run: npm ci
-      - run: npm run test
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{matrix.node-version}}
+          cache: 'yarn'
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Run Tests
+        run: yarn test
       # - run: npm run lint
-      - uses: artiomtr/jest-coverage-report-action@v2.2.0
-        with: 
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          # threshold: 80 # optional parameter auto-reject if below.
-      - run: npm run build
-        env: 
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
+      - name: Coverage Report
+        uses: ArtiomTr/jest-coverage-report-action@v2
+        
