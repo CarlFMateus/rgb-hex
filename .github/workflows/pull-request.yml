@@ -40,7 +40,7 @@ jobs:
         shell: bash
         run: |
           value=`sed -n 47p coverage/lcov-report/index.html | awk -F '>' '{print $2}' | awk -F '%' '{print $1}'`
-          echo "::save-state name=coverage::$value"
+          echo "::set-output name=coverage::$value"
           echo $value
       # - run: npm run lint
 
@@ -55,7 +55,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo
             })
-            console.log(labels.data)
+            console.log(github)
             let covLabel = null
             labels.data.forEach(label => {
               if (label.name.match(/COV:/)) {
