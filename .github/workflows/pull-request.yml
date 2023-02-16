@@ -56,7 +56,7 @@ jobs:
             })
 
             
-            console.log(JSON.stringify(context))
+            console.log(context.payload)
       - name: Coverage Report
         uses: ArtiomTr/jest-coverage-report-action@v2
         with: 
