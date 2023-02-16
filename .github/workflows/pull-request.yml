@@ -31,10 +31,11 @@ jobs:
           cache: "yarn"
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-      - name: Run Tests
-        run: yarn test
+      # - name: Run Tests
+      #   run: yarn test
       # - run: npm run lint
       - name: Coverage Report
         uses: ArtiomTr/jest-coverage-report-action@v2
         with: 
           test-script: yarn test
+          annotations: failed-tests
