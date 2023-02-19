@@ -49,19 +49,17 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            # const labels = await github.issues.listLabelsOnIssue({
-            #   issue_number: context.issue.number,
-            #   owner: context.repo.owner,
-            #   repo: context.repo.repo
-            # })
+            
+
+            const number = await context.payload.pull_request.number
+            console.log('number', number)
             const files = await github.pulls.listFiles({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              pull_number: context.payload.pull_request.number
+              pull_number: number
             })
 
             console.log('files', files)
-            console.log('pulls', context.payload.pull_request )
       # - name: Coverage Report
       #   uses: ArtiomTr/jest-coverage-report-action@v2
       #   with: 
