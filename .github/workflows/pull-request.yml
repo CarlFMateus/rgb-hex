@@ -57,15 +57,24 @@ jobs:
             })
 
             const isShow = files.data.some(file => file.filename.includes('.test.ts') || file.filename.includes('.test.js'))
-            console.log('github', github.checks)
+            console.log('sha-context', context.sha)
+            console.log('sha-payload', context.payload.pull_request.head.sha)
             if(!isShow){
               throw new Error('Debes tener al menos una prueba unitaria')
+              # await github.checks.create({
+              #   owner: context.repo.owner,
+              #   repo: context.repo.repo,
+              #   status: 'completed',
+              #   name: 'Failed Validation',
+              #   output: {
+              #     title: 'Failed Validation'
+              #   }
+              # })
             }
 
-
             return "Cumpliste con tener una prueba unitaria 👏"
-      - name: Coverage Report
-        uses: ArtiomTr/jest-coverage-report-action@v2
-        with:
-          test-script: yarn test
-          annotations: failed-tests
+      # - name: Coverage Report
+      #   uses: ArtiomTr/jest-coverage-report-action@v2
+      #   with:
+      #     test-script: yarn test
+      #     annotations: failed-tests
