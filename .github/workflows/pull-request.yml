@@ -44,7 +44,7 @@ jobs:
       #     echo $value
 
       # - run: npm run lint
-      - name: Add Coverage Label
+      - name: Do you have a unit test?
         uses: actions/github-script@v2
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
@@ -57,12 +57,8 @@ jobs:
             })
 
             const isShow = files.data.some(file => file.filename.includes('.test.ts') || file.filename.includes('.test.js'))
-            
-            console.log('sha-context', context.sha)
-            console.log('sha-payload', context.payload.pull_request.head.sha)
 
             if(!isShow){
-              
               await github.checks.create({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -76,9 +72,22 @@ jobs:
                   summary: 'Debe contener al menos una prueba'
                 }
               })
+              return;
             }
 
-            return "Cumpliste con tener una prueba unitaria 👏"
+            await github.checks.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              status: 'completed',
+              name: 'Failed Validation',
+              head_sha: context.payload.pull_request.head.sha || context.sha,
+              conclusion: 'success',
+              output: {
+                title: 'Successful Validation',
+                text: 'Contiene al menos una prueba unitaria',
+                summary: 'Debe contener al menos una prueba'
+              }
+            })
       # - name: Coverage Report
       #   uses: ArtiomTr/jest-coverage-report-action@v2
       #   with:
