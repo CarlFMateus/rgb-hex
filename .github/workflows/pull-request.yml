@@ -79,7 +79,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               status: 'completed',
-              name: 'Failed Validation',
+              name: 'Successful Validation',
               head_sha: context.payload.pull_request.head.sha || context.sha,
               conclusion: 'success',
               output: {
