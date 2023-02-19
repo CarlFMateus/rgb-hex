@@ -48,6 +48,7 @@ jobs:
         uses: actions/github-script@v2
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
+          result-encoding: string
           script: |
             const number = await context.payload.pull_request.number
             const files = await github.pulls.listFiles({
@@ -63,7 +64,7 @@ jobs:
               throw new Error('Debes tener al menos una prueba unitaria')
             }
 
-            return "Cumpliste con tener una prueba unitaria 👏"
+            return "**Cumpliste con tener una prueba unitaria** 👏"
       # - name: Coverage Report
       #   uses: ArtiomTr/jest-coverage-report-action@v2
       #   with:
