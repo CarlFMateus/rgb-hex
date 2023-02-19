@@ -57,10 +57,11 @@ jobs:
             })
 
             const isShow = files.data.some(file => file.filename.includes('.test.ts') || file.filename.includes('.test.js'))
-
             console.log('isShow', isShow)
-            console.log('files', files)
 
+            if(!isShow){
+              throw new Error('Debes tener al menos una prueba unitaria')
+            }
       # - name: Coverage Report
       #   uses: ArtiomTr/jest-coverage-report-action@v2
       #   with:
