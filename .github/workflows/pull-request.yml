@@ -58,6 +58,9 @@ jobs:
 
             const isShow = files.data.some(file => file.filename.includes('.test.ts') || file.filename.includes('.test.js'))
             
+            console.log('sha-context', context.sha)
+            console.log('sha-payload', context.payload.pull_request.head.sha)
+
             if(!isShow){
               throw new Error('Debes tener al menos una prueba unitaria')
             }
