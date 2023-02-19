@@ -54,14 +54,18 @@ jobs:
             #   owner: context.repo.owner,
             #   repo: context.repo.repo
             # })
-            const files = await github.pulls.listFiles({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.payload.pull_request.number
-            })
+            try {
+              const files = await github.pulls.listFiles({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.payload.pull_request.number
+              })
 
-            console.log('files', files )
-            console.log('pulls', context?.pulls )
+              console.log('files', files )
+              console.log('pulls', context?.pulls )
+            } catch(error){
+              console.log('error', error)
+            }
             # console.log(JSON.stringify(context.payload))
       # - name: Coverage Report
       #   uses: ArtiomTr/jest-coverage-report-action@v2
