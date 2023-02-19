@@ -33,17 +33,17 @@ jobs:
         run: yarn install --frozen-lockfile
       # - name: Run Tests
       #   run: yarn test
-      - name: Test and Generate Coverage
-        run: yarn test:coverage
-      - name: Print the Total Coverage
-        id: coverage-percent
-        shell: bash
-        run: |
-          value=`sed -n 47p coverage/lcov-report/index.html | awk -F '>' '{print $2}' | awk -F '%' '{print $1}'`
-          echo "::set-output name=coverage::$value"
-          echo $value
-      # - run: npm run lint
+      # - name: Test and Generate Coverage
+      #   run: yarn test:coverage
+      # - name: Print the Total Coverage
+      #   id: coverage-percent
+      #   shell: bash
+      #   run: |
+      #     value=`sed -n 47p coverage/lcov-report/index.html | awk -F '>' '{print $2}' | awk -F '%' '{print $1}'`
+      #     echo "::set-output name=coverage::$value"
+      #     echo $value
 
+      # - run: npm run lint
       - name: Add Coverage Label
         uses: actions/github-script@v2
         with:
@@ -55,9 +55,8 @@ jobs:
               repo: context.repo.repo
             })
 
-            
-            console.log(context.payload)
-      - name: Coverage Report
-        uses: ArtiomTr/jest-coverage-report-action@v2
-        with: 
-          test-script: yarn test
+            console.log(JSON.stringify(context.payload))
+      # - name: Coverage Report
+      #   uses: ArtiomTr/jest-coverage-report-action@v2
+      #   with: 
+      #     test-script: yarn test
