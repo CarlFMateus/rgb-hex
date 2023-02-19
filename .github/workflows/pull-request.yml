@@ -62,7 +62,20 @@ jobs:
             console.log('sha-payload', context.payload.pull_request.head.sha)
 
             if(!isShow){
-              throw new Error('Debes tener al menos una prueba unitaria')
+              
+              await github.checks.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                status: 'completed',
+                name: 'Failed Validation',
+                head_sha: context.payload.pull_request.head.sha || context.sha,
+                conclusion: 'failure',
+                output: {
+                  title: 'Failed Validation',
+                  text: 'Fallo porque no cumplio con las validación minima',
+                  summary: 'Debe contener al menos una prueba'
+                }
+              })
             }
 
             return "Cumpliste con tener una prueba unitaria 👏"
