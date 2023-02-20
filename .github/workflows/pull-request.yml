@@ -7,6 +7,7 @@ on:
       - "master"
     types: [opened, reopened, synchronize]
 
+# Agregando comentario
 # Test feature
 # permissions: write-all
 permissions:
@@ -20,7 +21,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [16.x]
 
     steps:
       - uses: actions/checkout@v3
@@ -35,22 +36,16 @@ jobs:
       #   run: yarn test
       # - name: Test and Generate Coverage
       #   run: yarn test:coverage
-      # - name: Print the Total Coverage
-      #   id: coverage-percent
-      #   shell: bash
-      #   run: |
-      #     value=`sed -n 47p coverage/lcov-report/index.html | awk -F '>' '{print $2}' | awk -F '%' '{print $1}'`
-      #     echo "::set-output name=coverage::$value"
-      #     echo $value
-
       # - run: npm run lint
       - name: Do you have a unit test?
-        uses: actions/github-script@v2
+        uses: actions/github-script@v6
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const number = await context.payload.pull_request.number
-            const files = await github.pulls.listFiles({
+
+            console.log(github)
+            const files = await github.rest.pulls.listFiles({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: number
@@ -59,7 +54,7 @@ jobs:
             const isShow = files.data.some(file => file.filename.includes('.test.ts') || file.filename.includes('.test.js'))
 
             if(!isShow){
-              await github.checks.create({
+              await github.rest.checks.create({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 status: 'completed',
@@ -72,10 +67,11 @@ jobs:
                   summary: 'Debe contener al menos una prueba'
                 }
               })
-              return;
+              
+              core.setFailed('Debe contener al menos una prueba')
             }
 
-            await github.checks.create({
+            await github.rest.checks.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
               status: 'completed',
@@ -87,7 +83,7 @@ jobs:
                 text: 'Contiene al menos una prueba unitaria',
                 summary: 'Debe contener al menos una prueba'
               }
-            })
+            }) 
       - name: Coverage Report
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
