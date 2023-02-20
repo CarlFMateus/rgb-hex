@@ -45,7 +45,7 @@ jobs:
             const number = await context.payload.pull_request.number
 
             console.log(github)
-            const files = await github.pulls.listFiles({
+            const files = await github.rest.pulls.listFiles({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: number
@@ -54,7 +54,7 @@ jobs:
             const isShow = files.data.some(file => file.filename.includes('.test.ts') || file.filename.includes('.test.js'))
 
             if(!isShow){
-              await github.checks.create({
+              await github.rest.checks.create({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 status: 'completed',
@@ -71,7 +71,7 @@ jobs:
               core.setFailed('Debe contener al menos una prueba')
             }
 
-            await github.checks.create({
+            await github.rest.checks.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
               status: 'completed',
