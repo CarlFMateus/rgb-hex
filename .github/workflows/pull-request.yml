@@ -89,7 +89,10 @@ jobs:
                 summary: 'Debe contener al menos una prueba'
               }
             })
+     
+      
       - name: Coverage Report
+        if: ${{ true }}
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
           test-script: yarn test
