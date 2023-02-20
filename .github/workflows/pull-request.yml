@@ -74,7 +74,7 @@ jobs:
                 }
               })
               
-              throw 'Debe contener al menos una prueba';
+              core.setFailed('Debe contener al menos una prueba')
             }
 
             await github.checks.create({
