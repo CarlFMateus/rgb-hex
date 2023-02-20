@@ -91,7 +91,6 @@ jobs:
               }
             }) 
       - name: Coverage Report
-        if: ${{ success() }}
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
           test-script: yarn test
