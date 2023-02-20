@@ -44,7 +44,7 @@ jobs:
           script: |
             const number = await context.payload.pull_request.number
 
-            console.log(github.pulls)
+            console.log(github)
             const files = await github.pulls.listFiles({
               owner: context.repo.owner,
               repo: context.repo.repo,
