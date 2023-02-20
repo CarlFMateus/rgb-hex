@@ -73,7 +73,8 @@ jobs:
                   summary: 'Debe contener al menos una prueba'
                 }
               })
-              return;
+              
+              throw new Error('Hay un error');
             }
 
             await github.checks.create({
