@@ -2,6 +2,6 @@ import { addFunc } from '../math'
 
 describe('Test math', () => {
   it('Should show result correctly', () => {
-    expect(addFunc(3,3)).toBe(6)
+    expect(addFunc(2,2)).toBe(4)
   })
 })
