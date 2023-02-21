@@ -7,16 +7,17 @@ on:
       - "master"
     types: [opened, reopened, synchronize]
 
-# Test feature
-# permissions: write-all
-permissions:
-  checks: write
-  pull-requests: write
-
 jobs:
   tests:
     if: startsWith(github.head_ref, 'feature')
     runs-on: ubuntu-latest
+
+    # permissions: write-all
+    permissions:
+      id-token: write
+      contents: read
+      checks: write
+      pull-requests: write
 
     strategy:
       matrix:
