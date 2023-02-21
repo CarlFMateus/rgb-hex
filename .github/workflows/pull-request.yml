@@ -11,6 +11,8 @@ on:
 # Test feature
 # permissions: write-all
 permissions:
+  id-token: write
+  contents: read
   checks: write
   pull-requests: write
 
