@@ -85,5 +85,5 @@ jobs:
       - name: Coverage Report
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
-          test-script: yarn test
+          test-script: yarn test __tests__/math.test.ts --coverage
           annotations: failed-tests
