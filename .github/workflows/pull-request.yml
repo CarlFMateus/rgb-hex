@@ -49,7 +49,10 @@ jobs:
               pull_number: number
             })
 
-            const isShow = files.data.some(file => file.filename.includes('.test.ts') || file.filename.includes('.test.js'))
+            const regex = /.*(spec|test).(ts|js|tsx)$/
+
+            const isShow = files.data.some(file => regex.test(file.filename) )
+            console.log('isShow', isShow)
 
             if(!isShow){
               await github.rest.checks.create({
