@@ -51,7 +51,6 @@ jobs:
 
             const regex = /.*(spec|test).(ts|js|tsx)$/
             const isShow = files.data.some(file => regex.test(file.filename) )
-            console.log('isShow', isShow)
 
             if(!isShow){
               await github.rest.checks.create({
@@ -87,5 +86,5 @@ jobs:
       - name: Coverage Report
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
-          # test-script: yarn test __tests__/math.test.ts --coverage
+          test-script: yarn test:changedsince
           annotations: failed-tests
