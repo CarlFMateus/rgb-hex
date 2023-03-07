@@ -10,7 +10,7 @@
     "test-changed": "jest -o",
     "test:nyan": "jest --reporters=\"jest-nyancat-reporter\"",
     "test:watch": "npm run test -- --watchAll",
-    "test:changedsince": "jest --changedSince=master --coverage"
+    "test:changedsince": "jest --changedSince=origin/master --coverage"
   },
   "keywords": [
     "jest",
