@@ -89,20 +89,8 @@ jobs:
             })
       - name: Run tests
         run: yarn test:changedsince
-      - name: Failed Tests
-        if: ${{ failure() }}
-        id: failed-test
-        uses: actions/github-script@v6
-        with: 
-          script: | 
-            core.setFailed('You did not meet the required metrics 😞')
-            await github.rest.issues.createComment({
-              issue_number: ${{ github.event.number }},
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '❌ You did not meet the required metrics 😞'
-            })
       - name: Coverage Report
+        if: ${{ failure() || success() }}
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
           coverage-file: report.json
