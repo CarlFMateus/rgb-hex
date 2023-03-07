@@ -93,7 +93,7 @@ jobs:
               }
             })
       - name: Run tests
-        run: yarn jest --changedSince=origin/master --ci --json --coverage --testLocationInResults --outputFile=report.json
+        run: yarn test:changedsince
       - name: Coverage Report
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
