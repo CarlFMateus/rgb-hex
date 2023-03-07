@@ -24,7 +24,16 @@ jobs:
         node-version: [16.x]
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+      - run: |
+          git fetch --no-tags --depth=1 origin master
+          git checkout -b master
+          git checkout ${{ github.event.pull_request.head.sha }}
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
@@ -49,7 +58,8 @@ jobs:
               pull_number: number
             })
 
-            const isShow = files.data.some(file => file.filename.includes('.test.ts') || file.filename.includes('.test.js'))
+            const regex = /.*(spec|test).(ts|js|tsx)$/
+            const isShow = files.data.some(file => regex.test(file.filename) )
 
             if(!isShow){
               await github.rest.checks.create({
@@ -81,9 +91,12 @@ jobs:
                 text: 'Contiene al menos una prueba unitaria',
                 summary: 'Debe contener al menos una prueba'
               }
-            }) 
+            })
+      - name: Run tests
+        run: yarn test:changedsince
       - name: Coverage Report
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
-          test-script: yarn test
-          annotations: failed-tests
+          coverage-file: report.json
+          base-coverage-file: report.json
+          annotations: failed-tests      
