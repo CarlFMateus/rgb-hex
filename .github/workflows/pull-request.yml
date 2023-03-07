@@ -26,6 +26,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+      - run: |
+          git fetch --no-tags --depth=1 origin master
+          git checkout -b master
+          git checkout ${{ github.event.pull_request.head.sha }}
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
@@ -82,6 +89,12 @@ jobs:
             })
       - name: Run tests
         run: yarn test:changedsince
+      - name: Failed Tests
+        if: ${{ failure() }}
+        id: failed-test
+        uses: actions/github-script@v6
+        with: 
+          script: core.setFailed('You did not meet the required metrics 😞')
       - name: Coverage Report
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
