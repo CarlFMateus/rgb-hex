@@ -92,8 +92,11 @@ jobs:
                 summary: 'Debe contener al menos una prueba'
               }
             })
+      - name: Run tests
+        run: yarn jest --changedSince=origin/master --ci --json --coverage --testLocationInResults --outputFile=report.json
       - name: Coverage Report
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
-          test-script: yarn jest --changedSince=master --coverage
-          annotations: failed-tests
+          coverage-file: report.json
+          base-coverage-file: report.json
+          annotations: failed-tests       
