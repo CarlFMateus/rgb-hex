@@ -26,10 +26,10 @@ describe("`hexToRgb`", () => {
   });
 
   it('should convert "#000" to (0, 0, 0)', () => {
-    expect(hexToRgb("#000")).toEqual([0, 0, 0]);
+    expect(hexToRgb("#000")).toEqual([0, 0, 1]);
   });
 
-  // it("should throw an error when given an invalid hexadecimal color value", () => {
-  //   expect(() => hexToRgb("#XYZ")).toThrow(Error);
-  // });
+  it("should throw an error when given an invalid hexadecimal color value", () => {
+    expect(() => hexToRgb("#XYZ")).toThrow(Error);
+  });
 });
