@@ -23,6 +23,7 @@ export const rgbToHex = (r = 0, g = 0, b = 0): string =>
  * @returns An array of RGB decimal values.
  */
 export const hexToRgb = (hex: string): number[] => {
+  console.error('error siendo error')
   const hexWithoutHash = hex.match(/^#([0-9a-fA-F]{3,6})/);
 
   if (!hexWithoutHash) {
