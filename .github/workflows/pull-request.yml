@@ -94,7 +94,14 @@ jobs:
         id: failed-test
         uses: actions/github-script@v6
         with: 
-          script: core.setFailed('You did not meet the required metrics 😞')
+          script: | 
+            core.setFailed('You did not meet the required metrics 😞')
+            await github.rest.issues.createComment({
+              issue_number: ${{ github.event.number }},
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '❌ You did not meet the required metrics 😞'
+            })
       - name: Coverage Report
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
