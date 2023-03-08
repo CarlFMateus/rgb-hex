@@ -41,17 +41,15 @@ jobs:
           cache: "yarn"
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-      - run: yarn add execa
+      - run: npm install execa
       - name: Do you have a unit test?
         uses: actions/github-script@v6
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            import {execa} from 'execa';
+            const execa = require('execa')
 
-            const {stdout} = await execa('echo', ['unicorns']);
-            console.log(stdout);
-            
+            console.log(execa)
             const number = await context.payload.pull_request.number;
             const files = await github.rest.pulls.listFiles({
               owner: context.repo.owner,
