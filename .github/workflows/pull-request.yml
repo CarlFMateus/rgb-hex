@@ -41,7 +41,7 @@ jobs:
           cache: "yarn"
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-      - run: npm install execa
+      - run: yarn add execa
       - name: Do you have a unit test?
         uses: actions/github-script@v6
         with:
