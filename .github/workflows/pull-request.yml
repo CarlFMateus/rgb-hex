@@ -27,12 +27,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 2
       - run: |
-          git fetch --no-tags --depth=1 origin master
-          git checkout -b master
-          git checkout ${{ github.event.pull_request.head.sha }}
+          commits=${{ github.event.pull_request.commits }}
+          if [[ -n "$commits" ]]; then
+            # Prepare enough depth for diffs with master
+            git fetch --depth="$(( commits + 1 ))"
+          fi
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
@@ -55,42 +56,14 @@ jobs:
 
             const regex = /.*(spec|test).(ts|js|tsx)$/
             const isShow = files.data.some(file => regex.test(file.filename) )
-
-            if(!isShow){
-              await github.rest.checks.create({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                status: 'completed',
-                name: 'Failed Validation',
-                head_sha: context.payload.pull_request.head.sha || context.sha,
-                conclusion: 'failure',
-                output: {
-                  title: 'Failed Validation',
-                  text: 'Fallo porque no cumplio con las validación minima',
-                  summary: 'Debe contener al menos una prueba'
-                }
-              })
-              
+            if(!isShow) {
               core.setFailed('Debe contener al menos una prueba')
             }
-
-            await github.rest.checks.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              status: 'completed',
-              name: 'Successful Validation',
-              head_sha: context.payload.pull_request.head.sha || context.sha,
-              conclusion: 'success',
-              output: {
-                title: 'Successful Validation',
-                text: 'Contiene al menos una prueba unitaria',
-                summary: 'Debe contener al menos una prueba'
-              }
-            })
       - name: Run tests
+        id: test-changedsince
         run: yarn test:changedsince
       - name: Coverage Report
-        if: ${{ failure() || success() }}
+        if: ${{ failure() && steps.test-changedsince.conclusion == 'failure' }} || ${{ success() }}
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
           coverage-file: report.json
