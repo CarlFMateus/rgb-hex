@@ -67,9 +67,8 @@ jobs:
               return acc
             }, [])
 
-            const { $ } = require('execa')
-            const example = await $`jest ${cadena} --config ./jest.config.js --ci --json --coverage --testLocationInResults --outputFile=report.json`
-            console.log(example)
+            const execa = require('execa')
+            console.log(execa)
       
       # - name: Run tests
       #   id: test-changedsince
