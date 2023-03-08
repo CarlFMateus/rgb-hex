@@ -12,12 +12,12 @@ jobs:
     if: startsWith(github.head_ref, 'feature')
     runs-on: ubuntu-latest
 
-    # permissions: write-all
-    permissions:
-      id-token: write
-      contents: read
-      checks: write
-      pull-requests: write
+    permissions: write-all
+    # permissions:
+    #   id-token: write
+    #   contents: read
+    #   checks: write
+    #   pull-requests: write
 
     strategy:
       matrix:
