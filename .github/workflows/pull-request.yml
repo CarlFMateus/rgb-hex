@@ -67,6 +67,7 @@ jobs:
             }, [])
 
             console.log(cadena)
+            console.log('join', cadena.join(' '))
       
       # - name: Run tests
       #   id: test-changedsince
