@@ -46,9 +46,23 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const script = require('./script.js')
-            await script({ github, context })
-            console.log('Estoy aqui')
+            const number = await context.payload.pull_request.number;
+            const files = await github.rest.pulls.listFiles({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: number,
+            });
+
+            const regex = /.*(spec|test).(ts|js|tsx)$/;
+            const isShow = files.data.some((file) => regex.test(file.filename));
+            if (!isShow) {
+              core.setFailed("Debe contener al menos una prueba");
+            }
+
+            const cadena = files.data.filter(file => regex.test(file.filename) )
+            console.log('cadena', cadena)
+            console.log(cadena.join(' '))
+      
       # - name: Run tests
       #   id: test-changedsince
       #   run: yarn test:changedsince
