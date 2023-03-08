@@ -27,13 +27,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          fetch-depth: 2
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
       - run: |
-          commits=${{ github.event.pull_request.commits }}
-          if [[ -n "$commits" ]]; then
-            # Prepare enough depth for diffs with master
-            git fetch --depth="$(( commits + 1 ))"
-          fi
+          git fetch --no-tags --depth=1 origin master
+          git checkout -b master
+          git checkout ${{ github.event.pull_request.head.sha }}
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
@@ -47,26 +46,17 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const number = await context.payload.pull_request.number
-            const files = await github.rest.pulls.listFiles({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: number
-            })
-
-            const regex = /.*(spec|test).(ts|js|tsx)$/
-            const isShow = files.data.some(file => regex.test(file.filename) )
-            if(!isShow) {
-              core.setFailed('Debe contener al menos una prueba')
-            }
-      - name: Run tests
-        id: test-changedsince
-        run: yarn test:changedsince
-      - name: Coverage Report
-        if: ${{ failure() && steps.test-changedsince.conclusion == 'failure' }} || ${{ success() }}
-        uses: ArtiomTr/jest-coverage-report-action@v2
-        with:
-          coverage-file: report.json
-          base-coverage-file: report.json
-          annotations: failed-tests
-          skip-step: install
+            const script = require('./script.js')
+            await script({ github, context })
+            console.log('Estoy aqui')
+      # - name: Run tests
+      #   id: test-changedsince
+      #   run: yarn test:changedsince
+      # - name: Coverage Report
+      #   if: ${{ failure() && steps.test-changedsince.conclusion == 'failure' }} || ${{ success() }}
+      #   uses: ArtiomTr/jest-coverage-report-action@v2
+      #   with:
+      #     coverage-file: report.json
+      #     base-coverage-file: report.json
+      #     annotations: failed-tests
+      #     skip-step: install
