@@ -47,6 +47,10 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
+            const execa = require('execa')
+            const { stdout } = await execa('echo', ['hello', 'world'])
+
+            console.log(stdout)
             const number = await context.payload.pull_request.number;
             const files = await github.rest.pulls.listFiles({
               owner: context.repo.owner,
@@ -66,10 +70,6 @@ jobs:
               } 
               return acc
             }, [])
-
-            const execa = require('execa')
-            console.log(execa)
-      
       # - name: Run tests
       #   id: test-changedsince
       #   run: yarn test:changedsince
