@@ -59,9 +59,14 @@ jobs:
               core.setFailed("Debe contener al menos una prueba");
             }
 
-            const cadena = files.data.filter(file => regex.test(file.filename) )
-            console.log('cadena', cadena)
-            console.log(cadena.join(' '))
+            const cadena = files.data.reduce((acc, element) => {
+              if(regex.test(element.filename)) {
+                acc.push(element.filename) 
+              } 
+              return acc
+            }, [])
+
+            console.log(cadena)
       
       # - name: Run tests
       #   id: test-changedsince
