@@ -47,7 +47,7 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const execa = require('execa')
+            import { execa } from 'execa'
 
             console.log(execa)
             const number = await context.payload.pull_request.number;
