@@ -25,6 +25,11 @@ module.exports = async ({ github, context, core }) => {
   const { stdout, stderr } = await exec(
     `yarn jest ${cadena} --ci --json --coverage --testLocationInResults --outputFile=report.json`
   );
+
+  if(stderr){
+    console.error(`stderr: ${stderr}`);
+    throw new error(stderr)
+  }
+
   console.log(`stdout: ${stdout}`);
-  console.error(`stderr: ${stderr}`);
 };
