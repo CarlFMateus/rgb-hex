@@ -35,7 +35,7 @@ jobs:
             await validateTest({ github, context, core })
 
       - name: Run tests
-        if: ${{ success() && steps.validate-test.status == 'completed' && steps.validate-test.conclusion == 'success' }}
+        if: ${{ success() && steps.validate-test.conclusion == 'success' }}
         id: run-test
         uses: actions/github-script@v6
         with:
