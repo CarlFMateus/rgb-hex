@@ -51,16 +51,17 @@ jobs:
             }, [])
 
             const child_process = require('child_process')
-            const data = await child_process.exec(`yarn jest ${cadena} --ci --json --coverage --testLocationInResults --outputFile=report.json`)
-            console.log('data', data)
+            const { stdout, stderr } = await child_process.exec(`yarn jest ${cadena} --ci --json --coverage --testLocationInResults --outputFile=report.json`)
+            console.log('stderr: ', stderr)
+            console.log('stdout: ', stdout)
       # - name: Run tests
       #   id: test-changedsince
       #   run: yarn test:changedsince
-      - name: Coverage Report
-        if: ${{ failure() || success() }}
-        uses: ArtiomTr/jest-coverage-report-action@v2
-        with:
-          coverage-file: report.json
-          base-coverage-file: report.json
-          annotations: failed-tests
+      # - name: Coverage Report
+      #   if: ${{ failure() || success() }}
+      #   uses: ArtiomTr/jest-coverage-report-action@v2
+      #   with:
+      #     coverage-file: report.json
+      #     base-coverage-file: report.json
+      #     annotations: failed-tests
       #     skip-step: install
