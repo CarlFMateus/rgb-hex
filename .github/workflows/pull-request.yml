@@ -35,12 +35,6 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const child_process = require('child_process')
-            
-            console.log(child_process)
-            console.log(child_process.exec)
-
-
             const number = await context.payload.pull_request.number;
             const files = await github.rest.pulls.listFiles({
               owner: context.repo.owner,
@@ -60,6 +54,16 @@ jobs:
               } 
               return acc
             }, [])
+
+            console.log('cadena', cadena)
+            console.log(`jest --config ./jest.config.js ${cadena} --ci --json --coverage --testLocationInResults --outputFile=report.json`)
+
+            const child_process = require('child_process')
+            const {stdout, stderr} = await child_process.exec(`jest --config ./jest.config.js ${cadena} --ci --json --coverage --testLocationInResults --outputFile=report.json`)
+            
+            if(stderr){
+              console.log('error', stderr)
+            }
       # - name: Run tests
       #   id: test-changedsince
       #   run: yarn test:changedsince
