@@ -29,16 +29,15 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{matrix.node-version}}
-          cache: "yarn"
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
-      - run: yarn add axios
+        run: npm ci
+      - run: npm install execa
       - name: Do you have a unit test?
         uses: actions/github-script@v6
         with:
           script: |
-            const axios = require('axios');
-            console.log(axios)
+            const execa = require('execa')
+            console.log(execa)
 
             const number = await context.payload.pull_request.number;
             const files = await github.rest.pulls.listFiles({
