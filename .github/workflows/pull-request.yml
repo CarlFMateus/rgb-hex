@@ -47,7 +47,7 @@ jobs:
       #   id: test-changedsince
       #   run: yarn test:changedsince
       - name: Coverage Report
-        if: ${{ failure() && steps.run-test.conclusion == 'failure' }} || ${{ success() }}
+        if: ${{ steps.run-test.conclusion == 'failure' }} || ${{ success() }}
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
           coverage-file: report.json

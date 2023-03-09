@@ -34,7 +34,7 @@ const runTest = async ({ github, context, core }) => {
 
   try {
     const { stdout, stderr } = await exec(
-      `yarn jest ${cadena} --config ./jest.config.js --ci --json --coverage --testLocationInResults --outputFile=report.json`
+      `yarn jest ${cadena.join(' ')} --config ./jest.config.js --ci --json --coverage --testLocationInResults --outputFile=report.json`
     );
   
     console.log('stdout:', stdout);
