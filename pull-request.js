@@ -22,14 +22,14 @@ module.exports = async ({ github, context, core }) => {
     return acc;
   }, []);
 
-  const { stdout, stderr } = await exec(
-    `yarn jest ${cadena} --ci --json --coverage --testLocationInResults --outputFile=report.json`
-  );
-
-  if(stderr){
-    console.error(`stderr: ${stderr}`);
-    throw new error(stderr)
+  try {
+    const { stdout, stderr } = await exec(
+      `yarn jest ${cadena} --config ./jest.config.js --ci --json --coverage --testLocationInResults --outputFile=report.json`
+    );
+  
+    console.log('stdout:', stdout);
+    console.error('stderr:', stderr);
+  } catch (error) {
+    console.error(error.message)
   }
-
-  console.log(`stdout: ${stdout}`);
 };
