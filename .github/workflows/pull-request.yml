@@ -33,19 +33,19 @@ jobs:
           script: |
             const { validateTest } = require('./pull-request.js')
             await validateTest({ github, context, core })
-      # - name: Run tests
-      #   if: ${{ success() && steps.validate-test.conclusion == 'success' }}
-      #   id: run-test
-      #   uses: actions/github-script@v6
-      #   with:
-      #     script: |
-      #       const { runTest } = require('./pull-request.js')
-      #       await runTest({ github, context, core }) 
-      # - name: Coverage Report
-      #   if: ${{ steps.run-test.conclusion == 'failure' }} || ${{ steps.run-test.conclusion == 'success' }}
-      #   uses: ArtiomTr/jest-coverage-report-action@v2
-      #   with:
-      #     coverage-file: report.json
-      #     base-coverage-file: report.json
-      #     annotations: failed-tests
+      - name: Run tests
+        if: ${{ success() && steps.validate-test.conclusion == 'success' }}
+        id: run-test
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { runTest } = require('./pull-request.js')
+            await runTest({ github, context, core }) 
+      - name: Coverage Report
+        if: ${{ steps.run-test.conclusion == 'failure' }} || ${{ steps.run-test.conclusion == 'success' }}
+        uses: ArtiomTr/jest-coverage-report-action@v2
+        with:
+          coverage-file: report.json
+          base-coverage-file: report.json
+          annotations: failed-tests
       #     skip-step: install
