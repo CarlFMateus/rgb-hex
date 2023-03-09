@@ -50,10 +50,13 @@ jobs:
               return acc
             }, [])
 
-            const child_process = require('child_process')
-            const { stdout, stderr } = await child_process.exec(`yarn jest ${cadena} --ci --json --coverage --testLocationInResults --outputFile=report.json`)
+            const util = require('node:util');
+            const exec = util.promisify(require('node:child_process').exec);
+
+            const { stdout, stderr } = await exec(`yarn jest ${cadena} --ci --json --coverage --testLocationInResults --outputFile=report.json`)
             console.log('stderr: ', stderr)
-            console.log('stdout: ', stdout)
+            console.error('stdout: ', stdout)
+
       # - name: Run tests
       #   id: test-changedsince
       #   run: yarn test:changedsince
