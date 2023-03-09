@@ -36,7 +36,8 @@ jobs:
         with:
           script: |
             const util = require('util')
-            console.log(util)
+            const exec = util.promisify(require("child_process").exec)
+            console.log(exec)
 
 
             const number = await context.payload.pull_request.number;
