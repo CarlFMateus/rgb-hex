@@ -42,7 +42,7 @@ jobs:
             const { runTest } = require('./pull-request.js')
             await runTest({ github, context, core }) 
       - name: Prueba
-        run: echo ${{ steps }}
+        run: echo '${{ toJSON(steps) }}' 
       # - name: Coverage Report
       #   if: ${{ failure() && steps.run-test.conclusion == 'failure' }} || ${{ steps.run-test.conclusion == 'success' }}
       #   uses: ArtiomTr/jest-coverage-report-action@v2
