@@ -35,7 +35,6 @@ jobs:
       - name: Do you have a unit test?
         uses: actions/github-script@v6
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const execa = require('execa')
 
