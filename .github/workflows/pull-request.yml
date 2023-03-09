@@ -50,8 +50,6 @@ jobs:
               return acc
             }, [])
 
-            console.log('cadena', cadena)
-
             const child_process = require('child_process')
             child_process.exec(`yarn jest ${cadena} --ci --json --coverage --testLocationInResults --outputFile=report.json`, (error, stdout, stderr) => {
               if (error) {
