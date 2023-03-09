@@ -58,8 +58,8 @@ jobs:
             console.log('cadena', cadena)
             console.log(`jest --config ./jest.config.js ${cadena} --ci --json --coverage --testLocationInResults --outputFile=report.json`)
 
-            const { exec } = require('child_process')
-            exec(`jest ${cadena} --ci --json --coverage --testLocationInResults --outputFile=report.json`, (error, stdout, stderr) => {
+            const child_process = require('child_process')
+            child_process.exec(`jest ${cadena} --ci --json --coverage --testLocationInResults --outputFile=report.json`, (error, stdout, stderr) => {
               if (error) {
                 console.log(`error: ${error.message}`);
                 return;
