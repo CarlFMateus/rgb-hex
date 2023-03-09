@@ -13,11 +13,6 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions: write-all
-    # permissions:
-    #   id-token: write
-    #   contents: read
-    #   checks: write
-    #   pull-requests: write
 
     strategy:
       matrix:
@@ -74,11 +69,11 @@ jobs:
       # - name: Run tests
       #   id: test-changedsince
       #   run: yarn test:changedsince
-      - name: Coverage Report
-        if: ${{ failure() || success() }}
-        uses: ArtiomTr/jest-coverage-report-action@v2
-        with:
-          coverage-file: report.json
-          base-coverage-file: report.json
-          annotations: failed-tests
+      # - name: Coverage Report
+      #   if: ${{ failure() || success() }}
+      #   uses: ArtiomTr/jest-coverage-report-action@v2
+      #   with:
+      #     coverage-file: report.json
+      #     base-coverage-file: report.json
+      #     annotations: failed-tests
       #     skip-step: install
