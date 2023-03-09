@@ -11,10 +11,7 @@ const validateTest = async ({ github, context, core }) => {
 
   const regex = /.*(spec|test).(ts|js|tsx)$/;
   const isShow = files.data.some(
-    (file) => {
-      console.log(file)
-      return regex.test(file.filename) && file.status !== "removed"
-    }
+    (file) => regex.test(file.filename) && file.status !== "removed"
   );
   if (!isShow) {
     core.setFailed("Debe contener al menos una prueba");
