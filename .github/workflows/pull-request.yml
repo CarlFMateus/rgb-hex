@@ -31,13 +31,12 @@ jobs:
           node-version: ${{matrix.node-version}}
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-      - run: yarn add execa
       - name: Do you have a unit test?
         uses: actions/github-script@v6
         with:
           script: |
-            const execa = require('execa')
-            console.log(execa)
+            const util = require('util')
+            console.log(util)
 
 
             const number = await context.payload.pull_request.number;
