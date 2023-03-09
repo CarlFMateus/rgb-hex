@@ -1,5 +1,7 @@
 import { rgbToHex, hexToRgb } from "../index";
 
+// Agregue un comentario
+
 describe("`rgbToHex`", () => {
   it('should convert (255, 255, 255) to "#FFFFFF"', () => {
     expect(rgbToHex(255, 255, 255)).toEqual("#FFFFFF");
