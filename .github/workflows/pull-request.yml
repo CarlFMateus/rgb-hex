@@ -44,11 +44,11 @@ jobs:
       - name: Prueba
         if: ${{ failure() }} 
         run: echo '${{ toJSON(steps) }}' 
-      # - name: Coverage Report
-      #   if: ${{ failure() && steps.run-test.conclusion == 'failure' }} || ${{ steps.run-test.conclusion == 'success' }}
-      #   uses: ArtiomTr/jest-coverage-report-action@v2
-      #   with:
-      #     coverage-file: report.json
-      #     base-coverage-file: report.json
-      #     annotations: failed-tests
-      #     skip-step: install
+      - name: Coverage Report
+        if: ${{ failure() && steps.run-test.conclusion == 'failure' }} || ${{ steps.run-test.conclusion == 'success' }}
+        uses: ArtiomTr/jest-coverage-report-action@v2
+        with:
+          coverage-file: report.json
+          base-coverage-file: report.json
+          annotations: failed-tests
+          skip-step: install
