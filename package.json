@@ -9,7 +9,9 @@
     "test": "jest",
     "test-changed": "jest -o",
     "test:nyan": "jest --reporters=\"jest-nyancat-reporter\"",
-    "test:watch": "npm run test -- --watchAll"
+    "test:watch": "npm run test -- --watchAll",
+    "test:changedsince": "jest --config ./jest.config.js --changedSince=origin/master --ci --json --coverage --testLocationInResults --outputFile=report.json",
+    "test:changedsince-fury": "jest --config ./jest.config.pr.js --changedSince=origin/master --ci --json --coverage --testLocationInResults --outputFile=report.json"
   },
   "keywords": [
     "jest",
