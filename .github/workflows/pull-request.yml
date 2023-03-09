@@ -59,11 +59,13 @@ jobs:
             console.log(`jest --config ./jest.config.js ${cadena} --ci --json --coverage --testLocationInResults --outputFile=report.json`)
 
             const child_process = require('child_process')
-            const {stdout, stderr} = await child_process.exec(`jest --config ./jest.config.js ${cadena} --ci --json --coverage --testLocationInResults --outputFile=report.json`)
+            const {stdout, stderr} = await child_process.exec(`jest ${cadena} --ci --json --coverage --testLocationInResults --outputFile=report.json`)
             
             if(stderr){
               console.log('error', stderr)
             }
+
+            console.log('stdout', stdout)
       # - name: Run tests
       #   id: test-changedsince
       #   run: yarn test:changedsince
