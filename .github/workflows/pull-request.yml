@@ -27,6 +27,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
       - name: Do you have a unit test?
+        id: validate-test
         uses: actions/github-script@v6
         with:
           script: |
@@ -34,11 +35,13 @@ jobs:
             await validateTest({ github, context, core })
 
       - name: Run tests
+        if: ${{ success() && steps.validate-test.conclusion == 'success' }}
         id: run-test
         uses: actions/github-script@v6
         with:
           script: |
             const { runTest } = require('./pull-request.js')
+            console.log(steps)
             await runTest({ github, context, core })
 
       # - name: Run tests
