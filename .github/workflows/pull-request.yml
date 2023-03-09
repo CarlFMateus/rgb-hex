@@ -30,31 +30,8 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const number = await context.payload.pull_request.number;
-            const files = await github.rest.pulls.listFiles({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: number,
-            });
-
-            const regex = /.*(spec|test).(ts|js|tsx)$/;
-            const isShow = files.data.some((file) => regex.test(file.filename));
-            if (!isShow) {
-              core.setFailed("Debe contener al menos una prueba");
-            }
-
-            const cadena = files.data.reduce((acc, element) => {
-              if(regex.test(element.filename)) {
-                acc.push(element.filename) 
-              } 
-              return acc
-            }, [])
-
-            const child_process = require('child_process')
-            
-            const { stdout, stderr } = await child_process.exec(`yarn jest ${cadena} --ci --json --coverage --testLocationInResults --outputFile=report.json`)
-            console.log(`stdout: ${stdout}`);
-            console.error(`stderr: ${stderr}`);
+            const script = require('./pull-request.js')
+            await script({ github, context, core })
       # - name: Run tests
       #   id: test-changedsince
       #   run: yarn test:changedsince
