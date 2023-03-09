@@ -43,8 +43,8 @@ const runTest = async ({ github, context, core }) => {
     console.log("stdout:", stdout);
     console.error("stderr:", stderr);
   } catch (error) {
-    console.error('error', error);
-    throw error.message
+    console.error('error', error.message);
+    core.setFailed(error.message);
   }
 };
 
